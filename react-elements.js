@@ -83,11 +83,13 @@ ReactDOM.render(
 // We can even "concatenate" the different JS objects using JSX so we avoid using the createElement function
 // [Q]: it works, but is this correct? 
 
-const headerConcatenatedJSX =
-    <header>
-    { titleJSX }
-    { descJSX }
+const headerConcatenatedJSX = (
+    <header className="header"> {/* jsx use camel case and allows us to modify attributes */}
+        { titleJSX }  {/* <-- this is called a "jsx expression". Allows us to use js in side jsx*/}
+        {descJSX} <p>this was added in jsx</p> { /* and allows as to concatenate on the fly */}
     </header>
+); //the parenthesys is just for clarity
+
 
 // instead of creating the header element with createElement, we are creating it with jsx.
     
@@ -97,10 +99,12 @@ ReactDOM.render(
 );
 
 // All the previous code, is transpiled into js createElement functions before render()
+// you can see how it does it and try to convert it back to js here: https://babeljs.io/repl
 
 // TODOs:
-// 1. Explain the flow jsx-- > transpiler-- > render()-- > browser
-// 2. Convert in runtime jsx to js to make it clear how it works
+// - show examples of createElement function nesting
+// - Explain the flow jsx-- > transpiler-- > render()-- > browser
+// - Convert in runtime jsx to js to make it clear how it works
 
 
 
