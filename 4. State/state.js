@@ -49,7 +49,7 @@ class Counter extends React.Component {
     // but this way is not supported in all browsers
 
     incrementScore() {
-        // this.state.score++ --> Nope, state cannot be modified directly. You need to do it through setState function so it knows something has changed and renders again
+        // this.state.score++ --> Nope, state cannot be modified directly. You need to do it through setState function so React knows something has changed and renders again
         this.setState({
             score: this.state.score + 1 //after doing this, setState will tell React that this element needs to be re-rendered
             // but we cannot make it this way! it losts "binding". "this" is undefined here because custom made functiones are not binded to the object, so can't use this
@@ -80,6 +80,7 @@ const Player = ( props ) => {
     return (
         <div className="player">
             <span className="player-name">
+            <button className="remove-player" onClick={ () => props.removePlayer( props.id ) }>✖</button>
                 { props.playerName }
             </span>
         <Counter />,
@@ -88,54 +89,91 @@ const Player = ( props ) => {
     );
 }
 
-const players = [
-    {
-        name: "Guil",
-        score: 50,
-        id: 1
-    },
-    {
-        name: "Treasure",
-        score: 85,
-        id: 2
-    },
-    {
-        name: "Ashley",
-        score: 95,
-        id: 3
-    },
-    {
-        name: "James",
-        score: 80,
-        id: 4
-    },
-    {
-        name: "Ricardo",
-        score: 100,
-        id: 5
+
+// Again, in the App component, in order to be able to use state, we need to define the component as a class instead of as a function (stateless functional component)
+// In state, we will keep track of the players
+
+class App extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            
+            players :
+            [
+                {
+                    name: "Guil",
+                    // score: 50, --> we don't need the score here anymore since it is saved in the counter component
+                    id: 1
+                },
+                {
+                    name: "Treasure",
+                    // score: 85,--> we don't need the score here anymore since it is saved in the counter component
+                    id: 2
+                },
+                {
+                    name: "Ashley",
+                    // score: 95,--> we don't need the score here anymore since it is saved in the counter component
+                    id: 3
+                },
+                {
+                    name: "James",
+                    // score: 80,--> we don't need the score here anymore since it is saved in the counter component
+                    id: 4
+                },
+                {
+                    name: "Ricardo",
+                    // score: 100,--> we don't need the score here anymore since it is saved in the counter component
+                    id: 5
+                }
+            ]
+        };
     }
-];
 
-// In order to be able to use state, we need to define the component as a class instead of as a function (stateless functional component)
-// 
+    // handleRemovePlayer = ( id ) => {
+        // this.setState(
+            // setState takes an object as parameter, thus the parenthesis
+            // {
+                // players : this.state.players.filter ( p => {}) --> But this could cause problems and we need to update based on the previous state so...
+    // }
 
-const App = ( props ) => {
-    return (
-        <div className="scoreboard">
-            <Header title="Scoreboard" totalPlayers={ props.initialPlayers.length } /> 
-            {
-                props.initialPlayers.map(player =>
-                    <Player
-                        playerName= {player.name}
-                        key={player.id.toString()}
-                    />)     
+    // so instead of providing the array, we provide a callback function that takes the previous state
+    handleRemovePlayer = (id) => {
+        this.setState( // Remember, we cannot modify the state directly! (like..."this.state")
+            
+            // why can't we just do players: prevState.players.filter... --> [Q]: because we need to do it async so we fix the problem we talk about above
+            prevState => {
+                return { //and returns the updated players arra
+                    players: prevState.players.filter (p => id !==p.id)
+                }
             }
-        </div>
+            
+        )
 
-    )
+    }
+
+    render() {
+        return (
+            <div className="scoreboard">
+                <Header title="Scoreboard" totalPlayers={ this.state.players.length } /> 
+                {
+                    this.state.players.map(player =>
+                        <Player
+                            id={player.id}
+                            removePlayer={this.handleRemovePlayer}
+                            playerName= {player.name}
+                            key={player.id.toString()}
+                        />)     
+                }
+            </div>)
+        }
 }
 
 ReactDOM.render(
-    <App initialPlayers={ players } />, 
+    <App />, 
     document.getElementById("root")
 );
+
+// There are two main types of state when building a React app:
+// application state and local component state (like ths counter states)
+

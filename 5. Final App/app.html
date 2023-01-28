@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Scoreboard</title>
+    <link rel="stylesheet" href="../app.css" />
+  </head>
+
+  <body>
+
+    <div id="root">Any existing element here will be replace</div>
+
+
+    <!-- We need to provide Babel to transpile the code before rendering and change the script tag (1)-->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Library for React -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <!-- Library for reactDOM -->
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- (1) change the script tag to know it is jsx -->
+    <script type="text/babel" src="./app.js"></script>
+  </body>
+</html>

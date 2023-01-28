@@ -9,7 +9,7 @@
 // React doesn't use a templating language, it uses plain js with jsx
 // Create a React Component has two steps: 1) definen the component as function or class and then 2) use or display the component with the JSX tag
 
-// By defining a new component, we will be defining a "react tab" that can indeed be a custom tag, for example the next code creates a tag called "myCustomTag"
+// By defining a new component, we will be defining a "react tag" that can indeed be a custom tag, for example the next code creates a tag called "myCustomTag"
 // and renders it into the browser (though keep in mind that custom tags are not valid html elements...)
 
 
@@ -86,7 +86,7 @@ const PlayerCounter = () => {
             <span className="player-name">
                 Ricardo
             </span>
-        <Counter />,
+            <Counter />,
 
         </div>
     );
@@ -127,7 +127,7 @@ ReactDOM.render(
 // for example to map the react components to what you see in the developer tools
 // React Dev Tools (extension to Chrome)
 // how to use:
-// - you will se the react code that underlies the UI
+// - you will see the react code that underlies the UI
 // - you can inspect as if they were html elements
 // - right click and select dom node, show states,...
 // - you can switch back and forth the react and the elements tab
